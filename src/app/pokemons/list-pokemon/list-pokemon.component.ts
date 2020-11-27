@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Pokemon } from '../../pokemon';
 import { POKEMONS } from '../../shared/list.pokemons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-pokemon',
@@ -11,7 +12,12 @@ export class ListPokemonComponent implements OnInit {
 
   pokemons: Pokemon[] = POKEMONS;
 
-  constructor() { }
+  selectPokemon(pokemon: Pokemon): void {
+    const link = ['/pokemon/', pokemon.id];
+    this.router.navigate(link);
+  }
+
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
