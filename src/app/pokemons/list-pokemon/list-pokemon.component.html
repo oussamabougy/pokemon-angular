@@ -13,10 +13,10 @@
             </svg>
             <b>{{pokemon.hp}}</b>
           </button>
-          <h5><span *ngFor="let type of pokemon.types" class="mt-5">{{type}}</span></h5>
+          <h5><span *ngFor="let type of pokemon.types" class="{{type | pokemonTypeColor}} mt-5">{{type}}</span></h5>
         </div>
         <div class="card-footer">
-          <small class="text-muted">{{pokemon.created}}</small>
+          <small class="text-muted">{{pokemon.created | date}}</small>
         </div>
       </div>
     </div>
