@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Pokemon} from '../../pokemon';
-import {ActivatedRoute, Router} from '@angular/router';
-import {POKEMONS} from '../../shared/list.pokemons';
+import { Pokemon } from '../../pokemon';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PokemonsService } from '../pokemons.service';
 
 @Component({
   selector: 'app-detail-pokemon',
@@ -9,35 +9,18 @@ import {POKEMONS} from '../../shared/list.pokemons';
   styleUrls: ['./detail-pokemon.component.scss']
 })
 export class DetailPokemonComponent implements OnInit {
+  pokemonToDisplay?: Pokemon = {};
 
-  listOfPokemons: Pokemon[] = POKEMONS;
-  pokemonToDisplay: Pokemon = {};
-
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private pokemonsService: PokemonsService) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.pokemonToDisplay = this.getPokemon(Number(id));
+    this.pokemonToDisplay = this.pokemonsService.getSinglePokemon(Number(id));
     console.log(this.pokemonToDisplay);
   }
 
   goBack(): void {
     this.router.navigate(['/']);
-  }
-
-  getPokemon(id: number): any {
-    let pokemon = null;
-    const size = this.listOfPokemons.length;
-    let i = 0;
-    let found = false;
-    while (i < size && !found){
-      if (this.listOfPokemons[i].id === id){
-        found = true;
-        pokemon = this.listOfPokemons[i];
-      }
-      i++;
-    }
-    return pokemon;
   }
 
 }
