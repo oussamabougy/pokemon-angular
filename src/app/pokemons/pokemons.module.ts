@@ -4,6 +4,9 @@ import { DetailPokemonComponent } from './detail-pokemon/detail-pokemon.componen
 import { ListPokemonComponent } from './list-pokemon/list-pokemon.component';
 import { PokemonTypeColorPipe } from '../shared/pipes/pokemon-type-color.pipe';
 import { BorderCardDirective } from '../shared/directives/border-card.directive';
+import { PokemonFormComponent } from './pokemon-form/pokemon-form.component';
+import { FormsModule } from '@angular/forms';
+import { PokemonEditComponent } from './pokemon-edit/pokemon-edit.component';
 
 
 
@@ -13,9 +16,12 @@ import { BorderCardDirective } from '../shared/directives/border-card.directive'
     DetailPokemonComponent,
     BorderCardDirective,
     PokemonTypeColorPipe,
+    PokemonFormComponent,
+    PokemonEditComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ]
 })
 export class PokemonsModule { }
