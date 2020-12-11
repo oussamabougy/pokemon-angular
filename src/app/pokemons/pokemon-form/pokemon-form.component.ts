@@ -12,7 +12,7 @@ export class PokemonFormComponent implements OnInit {
 
   types?: Array<string>;
 
-  @Input() pokemon: Pokemon;
+  @Input() pokemon?: Pokemon;
 
   constructor(private router: Router, private pokemonsService: PokemonsService) { }
 

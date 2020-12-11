@@ -1,35 +1,42 @@
 import { Injectable } from '@angular/core';
-import {Pokemon} from '../pokemon';
-import {POKEMONS} from '../shared/list.pokemons';
+import { Pokemon } from '../pokemon';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonsService {
 
-  constructor() { }
+  private pokemonsUrl = 'api/pokemons';
+  constructor(private http: HttpClient) { }
 
-  getListPokemons(): Pokemon[] {
-    return POKEMONS;
+  getListPokemons(): Observable<Pokemon[]> {
+    return this.http.get<Pokemon[]>(this.pokemonsUrl).pipe(
+      tap(_ => console.log('fetched pokemon')),
+      catchError(this.handleError('getListPokemons', []))
+    );
   }
 
-  getSinglePokemon(id: number): Pokemon|undefined {
-    let pokemon;
-    const listPokemons = this.getListPokemons();
-    const size = listPokemons.length;
-    let i = 0;
-    let found = false;
-    while (i < size && !found){
-      if (listPokemons[i].id === id){
-        found = true;
-        pokemon = listPokemons[i];
-      }
-      i++;
-    }
-    return pokemon;
+  getSinglePokemon(id: number): Observable<Pokemon> {
+    const url = `${this.pokemonsUrl}/${id}`;
+    return this.http.get<Pokemon>(url).pipe(
+      tap(_ => console.log(`fetched pokemon id = ${id}`)),
+      catchError(this.handleError(`get Pokemon id= ${id}`))
+    );
   }
 
   getPokemonTypes(): string[] {
     return ['Feu', 'Eau', 'Plante', 'Insecte', 'Normal', 'Vol', 'Poison', 'Fée', 'Psy', 'Electrik', 'Combat', ];
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.log(error);
+      console.log(`${operation} failed: ${error.message}`);
+
+      return of(result as T);
+    };
   }
 }

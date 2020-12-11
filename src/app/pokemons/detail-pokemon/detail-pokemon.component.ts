@@ -15,7 +15,9 @@ export class DetailPokemonComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.pokemonToDisplay = this.pokemonsService.getSinglePokemon(Number(id));
+    this.pokemonsService.getSinglePokemon(Number(id)).subscribe(
+      pokemon => this.pokemonToDisplay = pokemon
+    );
     console.log(this.pokemonToDisplay);
   }
 

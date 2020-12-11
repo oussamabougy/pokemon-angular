@@ -17,7 +17,9 @@ export class PokemonEditComponent implements OnInit {
   ngOnInit(): void {
     const index = this.route.snapshot.paramMap.get('id');
     const id = index ? +index : -1;
-    this.singlePokemon = this.pokemonsService.getSinglePokemon(id);
+    this.pokemonsService.getSinglePokemon(id).subscribe(
+      pokemon => this.singlePokemon = pokemon
+    );
   }
 
 }
