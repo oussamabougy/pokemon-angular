@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Pokemon } from '../../pokemon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PokemonsService } from '../pokemons.service';
+import {Observable} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-detail-pokemon',
@@ -34,4 +36,8 @@ export class DetailPokemonComponent implements OnInit {
     this.router.navigate(link);
   }
 
+  deletePokemon(pokemon: Pokemon): void {
+    this.pokemonsService.deletePokemon(pokemon.id).subscribe();
+    this.goBack();
+  }
 }
