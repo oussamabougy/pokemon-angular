@@ -65,4 +65,15 @@ export class PokemonsService {
       catchError(this.handleError<any>(`Deleted Pokemon id= ${id}`))
     );
   }
+
+  searchPokemons(term: string): Observable<Pokemon[]>{
+    if (!term.trim()){
+      return of([]);
+    }
+
+    return this.http.get<Pokemon[]>(`${this.pokemonsUrl}/?name=${term}`).pipe(
+      tap(_ => console.log('found pokemon')),
+      catchError(this.handleError('searched pokemons', []))
+    );
+  }
 }
