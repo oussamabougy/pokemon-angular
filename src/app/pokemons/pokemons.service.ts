@@ -39,4 +39,15 @@ export class PokemonsService {
       return of(result as T);
     };
   }
+
+  updatePokemon(pokemon: Pokemon): Observable<Pokemon> {
+    const httpOptions = {
+      headers: new HttpHeaders({'content-type': 'application/json'})
+    };
+
+    return this.http.put(this.pokemonsUrl, pokemon, httpOptions).pipe(
+      tap(_ => console.log(`Updated pokemon id = ${pokemon.id}`)),
+      catchError(this.handleError<any>(`Updated Pokemon id= ${pokemon.id}`))
+    );
+  }
 }
