@@ -13,7 +13,7 @@ import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 export class SearchPokemonComponent implements OnInit {
 
   private searchTerms = new Subject();
-  pokemons$: Observable<Pokemon[]>;
+  pokemons$?: Observable<Pokemon[]>;
 
   constructor(private router: Router, private pokemonsService: PokemonsService) { }
 
@@ -21,7 +21,7 @@ export class SearchPokemonComponent implements OnInit {
     this.pokemons$ = this.searchTerms.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((term: string) => this.pokemonsService.searchPokemons(term))
+      switchMap((term: any) => this.pokemonsService.searchPokemons(term))
     );
   }
 

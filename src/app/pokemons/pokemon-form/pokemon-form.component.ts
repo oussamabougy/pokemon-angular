@@ -36,30 +36,35 @@ export class PokemonFormComponent implements OnInit {
    */
   selectType($event: any, type: string): void {
     const checked = $event.target.checked;
-    if (checked){
-      this.pokemon.types.push(type);
-    } else {
-      const index = this.pokemon.types.indexOf(type);
-      if (index > -1) {
-        this.pokemon.types.splice(index, 1);
+    if (this.pokemon && this.pokemon.types){
+      if (checked){
+        this.pokemon?.types?.push(type);
+      } else {
+        const index = this.pokemon.types.indexOf(type);
+        if (index > -1) {
+          this.pokemon.types.splice(index, 1);
+        }
       }
     }
   }
 
   onSubmit(): void {
     console.log('submitted');
-
-    this.pokemonsService.updatePokemon(this.pokemon).subscribe(
-      () => this.goBack()
-    );
+    if (this.pokemon) {
+      this.pokemonsService.updatePokemon(this.pokemon).subscribe(
+        () => this.goBack()
+      );
+    }
   }
 
   isTypesValid(type: string): boolean {
-    if (this.pokemon.types.length === 1 && this.hasType(type)){
-      return false;
-    }
-    if (this.pokemon.types.length >= 3 && !this.hasType(type)){
-      return false;
+    if (this.pokemon && this.pokemon.types) {
+      if (this.pokemon.types.length === 1 && this.hasType(type)) {
+        return false;
+      }
+      if (this.pokemon.types.length >= 3 && !this.hasType(type)) {
+        return false;
+      }
     }
     return true;
   }
